@@ -1,5 +1,5 @@
 import { observable, action } from 'mobx';
-import { persist } from 'mobx-persist';
+import { create, persist } from 'mobx-persist';
 
 class LoginStore {
     @persist @observable userLogged = false;
@@ -38,11 +38,13 @@ class LoginStore {
         });
       });
     }
-
 }
-
+const hydrate = create({
+  jsonify: false  // if you use AsyncStorage, here shoud be true
+                    // default: true
+});
 const loginStore = new LoginStore();
 
-
+hydrate('userLogged', loginStore).then(() => console.log('observable userLogged hydrated'));
 export default loginStore;
 export { LoginStore };
