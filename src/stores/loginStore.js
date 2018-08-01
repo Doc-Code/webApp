@@ -1,10 +1,8 @@
 import { observable, action } from 'mobx';
+import { persist } from 'mobx-persist';
 
 class LoginStore {
-    @observable userLogged;
-  constructor() {
-    this.userLogged = false;
-  }
+    @persist @observable userLogged = false;
     @action auth() {
       const request = require('request');
       const v = '1.0';
